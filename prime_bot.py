@@ -17,6 +17,22 @@ from telegram.ext import (
     filters,
 )
 
+# ----------------- Fancy Font -----------------
+FONT_MAP = {
+    "a":"ᴧ","b":"ʙ","c":"ᴄ","d":"ᴅ","e":"є","f":"ғ","g":"ɢ","h":"ʜ",
+    "i":"ɪ","j":"ᴊ","k":"ᴋ","l":"ʟ","m":"ϻ","n":"η","o":"σ","p":"ᴘ",
+    "q":"ǫ","r":"ʀ","s":"s","t":"ᴛ","u":"υ","v":"ᴠ","w":"ᴡ","x":"x",
+    "y":"ʏ","z":"ᴢ",
+    "A":"ᴧ","B":"ʙ","C":"ᴄ","D":"ᴅ","E":"є","F":"ғ","G":"ɢ","H":"ʜ",
+    "I":"ɪ","J":"ᴊ","K":"ᴋ","L":"ʟ","M":"ϻ","N":"η","O":"σ","P":"ᴘ",
+    "Q":"ǫ","R":"ʀ","S":"s","T":"ᴛ","U":"υ","V":"ᴠ","W":"ᴡ","X":"x",
+    "Y":"ʏ","Z":"ᴢ"
+}
+
+def fancy(text: str) -> str:
+    return "".join(FONT_MAP.get(c, c) for c in text)
+
+
 # ----------------- CONFIG & LOGGING -----------------
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -26,9 +42,9 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CHATS_FILE = os.path.join(BASE_DIR, "chats_data.json")
 GROUPS_FILE = os.path.join(BASE_DIR, "groups_list.json")
 USERS_FILE = os.path.join(BASE_DIR, "users_data.json")
-os.environ["GOOGLE_API_KEY"] = 'AIzaSyBj0J8t7gQg6E-jgrVd0OgawYzla4Oa41A'
+os.environ["GOOGLE_API_KEY"] = 'AIzaSyAIebzes4a4D_48j5POMSr2QdHNLRWvvIE'
 # Env / defaults
-BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN","8235975213:AAHo8WWloTZE_-lqSESOOpgrOtKgRHsAVo0")
+BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN","8235975213:AAHv7Z5cvZCCtzOFML2bfgqx_MIPL9BfJSs")
   # optional (used by langchain wrapper if installed)
 SPECIAL_USER_ID = 00
 
@@ -198,19 +214,19 @@ async def call_llm_with_history(chat_id: int, user_message: str, system_prompt: 
 # ----------------- Telegram handlers -----------------
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
-        [InlineKeyboardButton("Add to a group", callback_data="add_group")],
-        [InlineKeyboardButton("Chat personal", callback_data="chat_personal")],
+        [InlineKeyboardButton("ᴋɪᴅηᴧᴘ ϻєєʜ", callback_data="add_group")],
+        [InlineKeyboardButton("ᴄʜᴧᴛ ʜєʀє", callback_data="chat_personal")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    await update.message.reply_text("I am shin", reply_markup=reply_markup)
+    await update.message.reply_text("ʜєʏ! ɪ'ϻ ϻᴧᴧηᴧᴠ!", reply_markup=reply_markup)
 
 async def callback_query_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
     if query.data == "add_group":
-        await query.edit_message_text("Invite bot to your group then use /start in group.")
+        await query.edit_message_text("ɪηᴠɪᴛє ʙσᴛ ᴛσ ʏσυʀ ɢʀσυᴘ ᴛʜєη υsє /sᴛᴧʀᴛ ɪη ɢʀσυᴘ.")
     elif query.data == "chat_personal":
-        await query.edit_message_text("Start a personal chat by sending a message to me.")
+        await query.edit_message_text("sᴛᴧʀᴛ ᴧ ᴘєʀsσηᴧʟ ᴄʜᴧᴛ ʙʏ sєηᴅɪηɢ ᴧ ϻєssᴧɢє ᴛσ ϻє.")
 
 async def claim_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
